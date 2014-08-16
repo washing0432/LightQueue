@@ -8,11 +8,15 @@ namespace QueueConsole
     {
         private static void Main()
         {
+            QueueManager.Init();
             for (int i = 0; i < 5; i++)
             {
                 Console.WriteLine("loop {0} times ...", i);
-                QueueManager.Enqueue(new QueueTask());
+                QueueManager.Enqueue(new QueueTask() { Data = "i'm no." + i });
             }
+
+            Console.WriteLine("Main thread closed");
+            //Console.Read();
         }
     }
 }

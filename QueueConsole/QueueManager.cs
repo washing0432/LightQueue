@@ -1,50 +1,98 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace QueueConsole
 {
     public class QueueManager
     {
-        private static AutoResetEvent QueueTaskEvent = new AutoResetEvent(false);
-        private static AutoResetEvent workEvent = new AutoResetEvent(false);
-        private static Queue<IQueueTask> QueueTasks { get; set; }
-        private static Thread workThread = null;
+        private static readonly AutoResetEvent QueueTaskEvent = new AutoResetEvent(false);
+        private static readonly AutoResetEvent WorkEvent = new AutoResetEvent(false);
+        public static Queue<IQueueTask> QueueTasks { get; set; }
+        private static Thread _workThread = null;
+        private static Thread _workDispatcherThread = null;
+        private static object _lockEnqueue = new object();
+        private static bool _workNotOver = true;
 
         static QueueManager()
         {
+
+        }
+
+        public static void Init()
+        {
             QueueTasks = new Queue<IQueueTask>();
-            workThread = new Thread(DoingTask);
-            workThread.Start();
+            _workDispatcherThread = new Thread(Working);
+            _workDispatcherThread.Start();
+            _workThread = new Thread(QueueTask);
+            _workThread.Start();
+        }
+
+        public static void StopWoking()
+        {
+            Debug.Write("Queue working stop");
+            _workNotOver = false;
+            QueueTasks = new Queue<IQueueTask>();
+            QueueTaskEvent.Set();
+            WorkEvent.Set();
         }
 
         public static void Enqueue(IQueueTask pQueueTask)
         {
-            QueueTasks.Enqueue(pQueueTask);
-            QueueTaskEvent.Set();
-            Thread.Sleep(200);
-        }
+            if (!_workNotOver) return;
 
-        public static void Working()
-        {
-            while (true)
+            lock (_lockEnqueue)
             {
-                if (QueueTasks.Count == 0) continue;
-                workEvent.Set();
-                QueueTaskEvent.WaitOne();
+                //每秒最大任务数<200
+                //Thread.Sleep(1);
+                QueueTasks.Enqueue(pQueueTask);
+                QueueTaskEvent.Set();
             }
         }
 
-        public static void DoingTask()
+        private static void Working()
         {
-            while (true)
+            try
             {
-                if (QueueTasks.Count == 0) return;
-                IQueueTask task = QueueTasks.Dequeue();
-                task.Do();
-
-                workEvent.WaitOne();
+                while (true && _workNotOver)
+                {
+                    if (QueueTasks.Count == 0)
+                    {
+                        QueueTaskEvent.WaitOne();
+                        continue;
+                    }
+                    WorkEvent.Set();
+                }
+            }
+            catch (Exception exp)
+            {
+                Debug.Print(JsonConvert.SerializeObject(exp));
             }
         }
+
+        private static void QueueTask()
+        {
+            try
+            {
+                while (true && _workNotOver)
+                {
+                    if (QueueTasks.Count == 0)
+                    {
+                        WorkEvent.WaitOne();
+                        continue;
+                    }
+                    IQueueTask task = QueueTasks.Dequeue();
+                    task.Do();
+                    WorkEvent.WaitOne();
+                }
+            }
+            catch (Exception exp)
+            {
+                Debug.Print(JsonConvert.SerializeObject(exp));
+            }
+        }
+
     }
 }

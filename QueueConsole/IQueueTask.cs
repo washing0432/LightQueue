@@ -5,8 +5,9 @@ using System.Text;
 
 namespace QueueConsole
 {
-    public interface IQueueTask
+    public interface IQueueTask : IDisposable
     {
         void Do();
+        string Data { get; set; }
     }
 }

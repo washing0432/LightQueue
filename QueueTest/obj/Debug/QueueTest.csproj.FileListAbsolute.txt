@@ -1,0 +1,8 @@
+C:\git\LightQueue\QueueTest\bin\Debug\QueueTest.dll
+C:\git\LightQueue\QueueTest\bin\Debug\QueueTest.pdb
+C:\git\LightQueue\QueueTest\bin\Debug\QueueConsole.exe
+C:\git\LightQueue\QueueTest\bin\Debug\QueueConsole.pdb
+C:\git\LightQueue\QueueTest\obj\Debug\QueueTest.csprojResolveAssemblyReference.cache
+C:\git\LightQueue\QueueTest\obj\Debug\QueueTest.dll
+C:\git\LightQueue\QueueTest\obj\Debug\QueueTest.pdb
+C:\git\LightQueue\QueueTest\bin\Debug\Newtonsoft.Json.dll
