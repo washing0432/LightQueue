@@ -26,8 +26,8 @@ namespace QueueConsole
             QueueTasks = new Queue<IQueueTask>();
             _workDispatcherThread = new Thread(Working);
             _workDispatcherThread.Start();
-            _workThread = new Thread(QueueTask);
-            _workThread.Start();
+            //_workThread = new Thread(QueueTask);
+            //_workThread.Start();
         }
 
         public static void StopWoking()
@@ -45,8 +45,6 @@ namespace QueueConsole
 
             lock (_lockEnqueue)
             {
-                //每秒最大任务数<200
-                //Thread.Sleep(1);
                 QueueTasks.Enqueue(pQueueTask);
                 QueueTaskEvent.Set();
             }
@@ -63,7 +61,33 @@ namespace QueueConsole
                         QueueTaskEvent.WaitOne();
                         continue;
                     }
-                    WorkEvent.Set();
+
+                    IQueueTask task = QueueTasks.Dequeue();
+                    task.Do();
+                }
+            }
+            catch (Exception exp)
+            {
+                Debug.Print(JsonConvert.SerializeObject(exp));
+            }
+        }
+
+
+        private static void Working2()
+        {
+            try
+            {
+                while (true && _workNotOver)
+                {
+                    if (QueueTasks.Count == 0)
+                    {
+                        QueueTaskEvent.WaitOne();
+                        continue;
+                    }
+
+                    IQueueTask task = QueueTasks.Dequeue();
+                    task.Do();
+                    //WorkEvent.Set();
                 }
             }
             catch (Exception exp)

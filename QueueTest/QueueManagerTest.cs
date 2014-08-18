@@ -8,29 +8,52 @@ namespace QueueTest
     [TestClass]
     public class QueueManagerTest
     {
-        public int LoopCount = 500;
+        public int LoopCount = 1000;
 
         [TestMethod]
         public void Queue_MultThreadPushTest()
         {
             QueueManager.Init();
 
-            Thread th1 = new Thread(PushMail);
-            Thread th2 = new Thread(PushMessage);
-            Thread th3 = new Thread(PushOrder);
-            th1.Start();
-            th2.Start();
-            th3.Start();
+            for (int i = 0; i < 50; i++)
+            {
+                var imod = i % 3;
+                switch (imod)
+                {
+                    case 0:
+                        {
+                            Thread th1 = new Thread(PushMail);
+                            th1.Start();
+                            break;
+                        }
+                    case 1:
+                        {
+                            Thread th2 = new Thread(PushMessage);
+                            th2.Start();
+                        }
+                        break;
+                    case 2:
+                        {
+                            Thread th3 = new Thread(PushOrder);
+                            th3.Start();
+                        }
+                        break;
+                }
+            }
+
+
 
             Thread.Sleep(1000);
 
-            while (QueueManager.QueueTasks.Count>0)
+            while (QueueManager.QueueTasks.Count > 0)
             {
-                
+
             }
-            
+
             QueueManager.StopWoking();
         }
+
+
 
         public void PushMail()
         {
