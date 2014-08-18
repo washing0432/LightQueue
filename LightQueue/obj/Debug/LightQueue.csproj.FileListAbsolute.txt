@@ -1,0 +1,5 @@
+E:\git\my-code\LightQueue\LightQueue\bin\Debug\LightQueue.dll
+E:\git\my-code\LightQueue\LightQueue\bin\Debug\LightQueue.pdb
+E:\git\my-code\LightQueue\LightQueue\bin\Debug\Newtonsoft.Json.dll
+E:\git\my-code\LightQueue\LightQueue\obj\Debug\LightQueue.dll
+E:\git\my-code\LightQueue\LightQueue\obj\Debug\LightQueue.pdb

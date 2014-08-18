@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QueueConsole
+namespace LightQueue
 {
     public interface IQueueTask : IDisposable
     {

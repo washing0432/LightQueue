@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueConsole", "QueueConsol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueTest", "QueueTest\QueueTest.csproj", "{522035FF-97B4-484E-AF89-DB00C6BE7B3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightQueue", "LightQueue\LightQueue.csproj", "{8BDB1AB8-D4CA-48E6-B070-E03B4BBE946A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{522035FF-97B4-484E-AF89-DB00C6BE7B3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{522035FF-97B4-484E-AF89-DB00C6BE7B3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{522035FF-97B4-484E-AF89-DB00C6BE7B3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BDB1AB8-D4CA-48E6-B070-E03B4BBE946A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BDB1AB8-D4CA-48E6-B070-E03B4BBE946A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BDB1AB8-D4CA-48E6-B070-E03B4BBE946A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BDB1AB8-D4CA-48E6-B070-E03B4BBE946A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

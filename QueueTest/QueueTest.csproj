@@ -57,9 +57,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QueueConsole\QueueConsole.csproj">
-      <Project>{a93abbe4-5fd5-46d2-96de-bc343a5b6968}</Project>
-      <Name>QueueConsole</Name>
+    <ProjectReference Include="..\LightQueue\LightQueue.csproj">
+      <Project>{8bdb1ab8-d4ca-48e6-b070-e03b4bbe946a}</Project>
+      <Name>LightQueue</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

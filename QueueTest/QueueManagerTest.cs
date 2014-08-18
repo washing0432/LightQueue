@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
+using LightQueue;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using QueueConsole;
 
 namespace QueueTest
 {
@@ -59,6 +60,7 @@ namespace QueueTest
         {
             for (int i = 0; i < this.LoopCount; i++)
             {
+                Debug.Print("Thead:{0} Enqueue Mail {1}", Thread.CurrentThread.ManagedThreadId, i);
                 QueueManager.Enqueue(new QueueTask() { Data = string.Concat("Mail No.", i) });
             }
         }
@@ -67,6 +69,7 @@ namespace QueueTest
         {
             for (int i = 0; i < this.LoopCount; i++)
             {
+                Debug.Print("Thead:{0} Enqueue Message {1}", Thread.CurrentThread.ManagedThreadId, i);
                 QueueManager.Enqueue(new QueueTask() { Data = string.Concat("Message No.", i) });
             }
         }
@@ -75,6 +78,7 @@ namespace QueueTest
         {
             for (int i = 0; i < this.LoopCount; i++)
             {
+                Debug.Print("Thead:{0} Enqueue Order {1}", Thread.CurrentThread.ManagedThreadId, i);
                 QueueManager.Enqueue(new QueueTask() { Data = string.Concat("Order No.", i) });
             }
         }
