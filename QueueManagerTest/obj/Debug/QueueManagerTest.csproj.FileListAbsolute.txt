@@ -1,7 +1,0 @@
-E:\git\my-code\LightQueue\QueueManagerTest\bin\Debug\QueueManagerTest.dll
-E:\git\my-code\LightQueue\QueueManagerTest\bin\Debug\QueueManagerTest.pdb
-E:\git\my-code\LightQueue\QueueManagerTest\bin\Debug\QueueConsole.exe
-E:\git\my-code\LightQueue\QueueManagerTest\bin\Debug\QueueConsole.pdb
-E:\git\my-code\LightQueue\QueueManagerTest\obj\Debug\QueueManagerTest.csprojResolveAssemblyReference.cache
-E:\git\my-code\LightQueue\QueueManagerTest\obj\Debug\QueueManagerTest.dll
-E:\git\my-code\LightQueue\QueueManagerTest\obj\Debug\QueueManagerTest.pdb

@@ -6,15 +6,3 @@ C:\git\LightQueue\QueueTest\obj\Debug\QueueTest.csprojResolveAssemblyReference.c
 C:\git\LightQueue\QueueTest\obj\Debug\QueueTest.dll
 C:\git\LightQueue\QueueTest\obj\Debug\QueueTest.pdb
 C:\git\LightQueue\QueueTest\bin\Debug\Newtonsoft.Json.dll
-E:\git\my-code\LightQueue\QueueTest\bin\Debug\QueueTest.dll
-E:\git\my-code\LightQueue\QueueTest\bin\Debug\QueueTest.pdb
-E:\git\my-code\LightQueue\QueueTest\bin\Debug\Newtonsoft.Json.dll
-E:\git\my-code\LightQueue\QueueTest\obj\Debug\QueueTest.csprojResolveAssemblyReference.cache
-E:\git\my-code\LightQueue\QueueTest\obj\Debug\QueueTest.dll
-E:\git\my-code\LightQueue\QueueTest\obj\Debug\QueueTest.pdb
-E:\git\my-code\LightQueue\QueueTest\bin\Debug\LightQueue.dll
-E:\git\my-code\LightQueue\QueueTest\bin\Debug\LightQueue.pdb
-E:\git\my-code\LightQueue\QueueTest\bin\Debug\HZ.Logging.NlogWrapper.dll
-E:\git\my-code\LightQueue\QueueTest\bin\Debug\QueueTest.dll.config
-E:\git\my-code\LightQueue\QueueTest\bin\Debug\NLog.dll
-E:\git\my-code\LightQueue\QueueTest\bin\Debug\NLog.xml
