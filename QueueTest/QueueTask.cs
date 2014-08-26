@@ -4,10 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using HZ.Logging.NlogWrapper;
 using LightQueue;
 using Newtonsoft.Json;
 
-namespace LightQueue
+namespace QueueTest
 {
     public class QueueTask : IQueueTask
     {
@@ -16,15 +17,17 @@ namespace LightQueue
             string message = string.Empty;
             try
             {
-                message = string.Format("Thread:{0} Queue task done. Data:{1}", Thread.CurrentThread.ManagedThreadId, this.Data);
+                message = string.Format(" QueueTask Done. Data:{0}", this.Data);
+                HZLogger.Info(message);
             }
             catch (FormatException exp)
             {
-                 Debug.Print(JsonConvert.SerializeObject(exp));
+                HZLogger.Error(exp);
             }
-            //string message = string.Format("Thread:{0} Queue task done. Data ...", Thread.CurrentThread.ManagedThreadId, this.Data);
-            //Console.WriteLine(message);
-            Debug.Print(message);
+            catch (Exception exp)
+            {
+                HZLogger.Error(exp);
+            }
         }
 
 

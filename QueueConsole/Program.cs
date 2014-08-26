@@ -13,9 +13,10 @@ namespace QueueConsole
             for (int i = 0; i < 5; i++)
             {
                 Console.WriteLine("loop {0} times ...", i);
-                QueueManager.Enqueue(new QueueTask() { Data = "i'm no." + i });
+                //QueueManager.Enqueue(new QueueTask() { Data = "i'm no." + i });
             }
 
+            QueueManager.StopWoking();
             Console.WriteLine("Main thread closed");
             //Console.Read();
         }

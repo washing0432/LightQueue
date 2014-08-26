@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using HZ.Logging.NlogWrapper;
 using Newtonsoft.Json;
 
 namespace LightQueue
@@ -12,8 +13,8 @@ namespace LightQueue
     {
         private static readonly AutoResetEvent QueueTaskEvent = new AutoResetEvent(false);
         public static Queue<IQueueTask> QueueTasks { get; set; }
-        private static Thread _workDispatcherThread = null;
-        private static object _lockEnqueue = new object();
+        private static readonly object _lockEnqueue = new object();
+        private static readonly object _lockDequeue = new object();
         private static bool _workNotOver = true;
 
         static QueueManager()
@@ -24,16 +25,10 @@ namespace LightQueue
         public static void Init()
         {
             QueueTasks = new Queue<IQueueTask>();
-            _workDispatcherThread = new Thread(Working);
-            _workDispatcherThread.Start();
-        }
-
-        public static void StopWoking()
-        {
-            Debug.Write("Queue working stop");
-            _workNotOver = false;
-            QueueTasks = new Queue<IQueueTask>();
-            QueueTaskEvent.Set();
+            for (int i = 0; i < 30; i++)
+            {
+                StartTaskThread();
+            }
         }
 
         public static void Enqueue(IQueueTask pQueueTask)
@@ -42,16 +37,24 @@ namespace LightQueue
 
             lock (_lockEnqueue)
             {
-                QueueTasks.Enqueue(pQueueTask);
-                QueueTaskEvent.Set();
+                try
+                {
+                    QueueTasks.Enqueue(pQueueTask);
+                    QueueTaskEvent.Set();
+                }
+                catch (Exception exp)
+                {
+                    HZLogger.Fatal(string.Format("队列控制器发生异常 {0}", JsonConvert.SerializeObject(exp)));
+
+                }
             }
         }
 
         private static void Working()
         {
-            try
+            while (true && _workNotOver)
             {
-                while (true && _workNotOver)
+                try
                 {
                     if (QueueTasks.Count == 0)
                     {
@@ -59,14 +62,34 @@ namespace LightQueue
                         continue;
                     }
 
-                    IQueueTask task = QueueTasks.Dequeue();
+                    IQueueTask task = null;
+                    lock (_lockDequeue)
+                    {
+                        //这边有可能拿到0数量
+                        if (QueueTasks.Count == 0) continue;
+                        task = QueueTasks.Dequeue();
+                    }
                     task.Do();
                 }
+                catch (Exception exp)
+                {
+                    HZLogger.Error(string.Format("队列任务处理发生异常 {0}", JsonConvert.SerializeObject(exp)));
+                }
             }
-            catch (Exception exp)
-            {
-                Debug.Print(JsonConvert.SerializeObject(exp));
-            }
+        }
+
+        public static void StopWoking()
+        {
+            HZLogger.Info(string.Format("队列停止工作 还有{0}个任务未完成", QueueTasks.Count));
+            _workNotOver = false;
+            QueueTasks = new Queue<IQueueTask>();
+            QueueTaskEvent.Set();
+        }
+
+        private static void StartTaskThread()
+        {
+            var task = new Thread(Working);
+            task.Start();
         }
 
     }
